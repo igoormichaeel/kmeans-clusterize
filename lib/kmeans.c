@@ -115,32 +115,32 @@ void update_centroids(struct KMeans *model) {
 }
 
 void printCentroids(struct KMeans *model) {
-    printf("\n printing centroids: \n");
-    for (int cluster = 0; cluster < model->no_clusters; cluster++) {
-        for (int i = 0; i < model->columns; i++) {
-            float point = model->centroids[model->columns * cluster + i];
-            printf("%f, ", point);
-        }
-        printf("\n");
-    }
+    // printf("\n printing centroids: \n");
+    // for (int cluster = 0; cluster < model->no_clusters; cluster++) {
+    //     for (int i = 0; i < model->columns; i++) {
+    //         float point = model->centroids[model->columns * cluster + i];
+    //         printf("%f, ", point);
+    //     }
+    //     printf("\n");
+    // }
 }
 
 void printClusterCount(struct KMeans *model) {
-    int cluster_count[model->no_clusters];
-    for (int i = 0; i < model->no_clusters; i++) cluster_count[i] = 0;
+    // int cluster_count[model->no_clusters];
+    // for (int i = 0; i < model->no_clusters; i++) cluster_count[i] = 0;
 
-    for (int row = 0; row < model->rows; row++) {
-        for (int k = 0; k < model->no_clusters; k++) {
-            if (model->data_clusters[row] == k) {
-                //                printf("\nCluster matched....");
-                cluster_count[k] = cluster_count[k] + 1;
-                break;
-            }
-        }
-    }
+    // for (int row = 0; row < model->rows; row++) {
+    //     for (int k = 0; k < model->no_clusters; k++) {
+    //         if (model->data_clusters[row] == k) {
+    //             //                printf("\nCluster matched....");
+    //             cluster_count[k] = cluster_count[k] + 1;
+    //             break;
+    //         }
+    //     }
+    // }
 
-    for (int i = 0; i < model->no_clusters; i++)
-        printf("\nCount for cluster: %d = %d", i, cluster_count[i]);
+    // for (int i = 0; i < model->no_clusters; i++)
+    //     printf("\nCount for cluster: %d = %d", i, cluster_count[i]);
 }
 
 void fit(struct KMeans *model) {
@@ -151,7 +151,7 @@ void fit(struct KMeans *model) {
      */
     printCentroids(model);
     float **cluster_centroids = malloc(sizeof(float *) * model->no_clusters);
-    int iteration = 300;
+    int iteration = 10000;
     while (iteration >= 0) {
         for (int k = 0; k < model->no_clusters; k++) {
             cluster_centroids[k] = getClusterCentroid(model, k);
