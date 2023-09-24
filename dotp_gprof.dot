@@ -1,0 +1,14 @@
+digraph {
+	graph [fontname=Arial, nodesep=0.125, ranksep=0.25];
+	node [fontcolor=white, fontname=Arial, height=0, shape=box, style=filled, width=0];
+	edge [fontname=Arial];
+	1 [color="#ff0100", fontcolor="#ffffff", fontsize="10.00", label="main\n99.94%\n(0.00%)"];
+	1 -> 2 [arrowsize="1.00", color="#fe0600", fontcolor="#fe0600", fontsize="10.00", label="99.42%\n1×", labeldistance="3.98", penwidth="3.98"];
+	2 [color="#fe0600", fontcolor="#ffffff", fontsize="10.00", label="fit\n99.42%\n(14.90%)\n1×"];
+	2 -> 3 [arrowsize="0.83", color="#9ed007", fontcolor="#9ed007", fontsize="10.00", label="68.78%\n2538553830×", labeldistance="2.75", penwidth="2.75"];
+	2 -> 4 [arrowsize="0.40", color="#0c5a87", fontcolor="#0c5a87", fontsize="10.00", label="15.73%\n10001×", labeldistance="0.63", penwidth="0.63"];
+	3 [color="#9ed007", fontcolor="#ffffff", fontsize="10.00", label="eucledianDist\n68.78%\n(68.78%)\n2538553830×"];
+	4 [color="#0c5a87", fontcolor="#ffffff", fontsize="10.00", label="update_centroids\n15.73%\n(6.09%)\n10001×"];
+	4 -> 5 [arrowsize="0.35", color="#0d397f", fontcolor="#0d397f", fontsize="10.00", label="9.64%\n423092305×", labeldistance="0.50", penwidth="0.50"];
+	5 [color="#0d397f", fontcolor="#ffffff", fontsize="10.00", label="add_to_cluster_sum\n9.64%\n(9.64%)\n423092305×"];
+}

@@ -1,0 +1,208 @@
+Flat profile:
+
+Each sample counts as 0.01 seconds.
+  %   cumulative   self              self     total           
+ time   seconds   seconds    calls   s/call   s/call  name    
+ 69.28     76.69    76.69 2538553830     0.00     0.00  eucledianDist
+ 14.67     92.92    16.24        1    16.24   110.44  fit
+  9.76    103.73    10.80 423092305     0.00     0.00  add_to_cluster_sum
+  6.05    110.43     6.70    10001     0.00     0.00  update_centroids
+  0.39    110.86     0.43        1     0.43     0.43  randomCentroids
+  0.08    110.95     0.09                             assignCluster
+  0.01    110.96     0.01    60006     0.00     0.00  getClusterCentroid
+  0.01    110.97     0.01        1     0.01     0.01  getLines
+  0.00    110.97     0.00   890167     0.00     0.00  isColumnValid
+  0.00    110.97     0.00        1     0.00     0.43  init_model
+  0.00    110.97     0.00        1     0.00     0.00  printCentroids
+  0.00    110.97     0.00        1     0.00     0.01  readCsv
+  0.00    110.97     0.00        1     0.00     0.00  writeToCSV
+
+ %         the percentage of the total running time of the
+time       program used by this function.
+
+cumulative a running sum of the number of seconds accounted
+ seconds   for by this function and those listed above it.
+
+ self      the number of seconds accounted for by this
+seconds    function alone.  This is the major sort for this
+           listing.
+
+calls      the number of times this function was invoked, if
+           this function is profiled, else blank.
+
+ self      the average number of milliseconds spent in this
+ms/call    function per call, if this function is profiled,
+	   else blank.
+
+ total     the average number of milliseconds spent in this
+ms/call    function and its descendents per call, if this
+	   function is profiled, else blank.
+
+name       the name of the function.  This is the minor sort
+           for this listing. The index shows the location of
+	   the function in the gprof listing. If the index is
+	   in parenthesis it shows where it would appear in
+	   the gprof listing if it were to be printed.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.
+
+		     Call graph (explanation follows)
+
+
+granularity: each sample hit covers 2 byte(s) for 0.01% of 110.97 seconds
+
+index % time    self  children    called     name
+                                                 <spontaneous>
+[1]     99.9    0.00  110.88                 main [1]
+               16.24   94.20       1/1           fit [2]
+                0.00    0.43       1/1           init_model [6]
+                0.00    0.01       1/1           readCsv [11]
+                0.00    0.00       1/1           writeToCSV [14]
+-----------------------------------------------
+               16.24   94.20       1/1           main [1]
+[2]     99.5   16.24   94.20       1         fit [2]
+               76.69    0.00 2538553830/2538553830     eucledianDist [3]
+                6.70   10.80   10001/10001       update_centroids [4]
+                0.01    0.00   60006/60006       getClusterCentroid [9]
+                0.00    0.00       1/1           printCentroids [13]
+-----------------------------------------------
+               76.69    0.00 2538553830/2538553830     fit [2]
+[3]     69.1   76.69    0.00 2538553830         eucledianDist [3]
+-----------------------------------------------
+                6.70   10.80   10001/10001       fit [2]
+[4]     15.8    6.70   10.80   10001         update_centroids [4]
+               10.80    0.00 423092305/423092305     add_to_cluster_sum [5]
+-----------------------------------------------
+               10.80    0.00 423092305/423092305     update_centroids [4]
+[5]      9.7   10.80    0.00 423092305         add_to_cluster_sum [5]
+-----------------------------------------------
+                0.00    0.43       1/1           main [1]
+[6]      0.4    0.00    0.43       1         init_model [6]
+                0.43    0.00       1/1           randomCentroids [7]
+-----------------------------------------------
+                0.43    0.00       1/1           init_model [6]
+[7]      0.4    0.43    0.00       1         randomCentroids [7]
+-----------------------------------------------
+                                                 <spontaneous>
+[8]      0.1    0.09    0.00                 assignCluster [8]
+-----------------------------------------------
+                0.01    0.00   60006/60006       fit [2]
+[9]      0.0    0.01    0.00   60006         getClusterCentroid [9]
+-----------------------------------------------
+                0.01    0.00       1/1           readCsv [11]
+[10]     0.0    0.01    0.00       1         getLines [10]
+-----------------------------------------------
+                0.00    0.01       1/1           main [1]
+[11]     0.0    0.00    0.01       1         readCsv [11]
+                0.01    0.00       1/1           getLines [10]
+                0.00    0.00  890167/890167      isColumnValid [12]
+-----------------------------------------------
+                0.00    0.00  890167/890167      readCsv [11]
+[12]     0.0    0.00    0.00  890167         isColumnValid [12]
+-----------------------------------------------
+                0.00    0.00       1/1           fit [2]
+[13]     0.0    0.00    0.00       1         printCentroids [13]
+-----------------------------------------------
+                0.00    0.00       1/1           main [1]
+[14]     0.0    0.00    0.00       1         writeToCSV [14]
+-----------------------------------------------
+
+ This table describes the call tree of the program, and was sorted by
+ the total amount of time spent in each function and its children.
+
+ Each entry in this table consists of several lines.  The line with the
+ index number at the left hand margin lists the current function.
+ The lines above it list the functions that called this function,
+ and the lines below it list the functions this one called.
+ This line lists:
+     index	A unique number given to each element of the table.
+		Index numbers are sorted numerically.
+		The index number is printed next to every function name so
+		it is easier to look up where the function is in the table.
+
+     % time	This is the percentage of the `total' time that was spent
+		in this function and its children.  Note that due to
+		different viewpoints, functions excluded by options, etc,
+		these numbers will NOT add up to 100%.
+
+     self	This is the total amount of time spent in this function.
+
+     children	This is the total amount of time propagated into this
+		function by its children.
+
+     called	This is the number of times the function was called.
+		If the function called itself recursively, the number
+		only includes non-recursive calls, and is followed by
+		a `+' and the number of recursive calls.
+
+     name	The name of the current function.  The index number is
+		printed after it.  If the function is a member of a
+		cycle, the cycle number is printed between the
+		function's name and the index number.
+
+
+ For the function's parents, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the function into this parent.
+
+     children	This is the amount of time that was propagated from
+		the function's children into this parent.
+
+     called	This is the number of times this parent called the
+		function `/' the total number of times the function
+		was called.  Recursive calls to the function are not
+		included in the number after the `/'.
+
+     name	This is the name of the parent.  The parent's index
+		number is printed after it.  If the parent is a
+		member of a cycle, the cycle number is printed between
+		the name and the index number.
+
+ If the parents of the function cannot be determined, the word
+ `<spontaneous>' is printed in the `name' field, and all the other
+ fields are blank.
+
+ For the function's children, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the child into the function.
+
+     children	This is the amount of time that was propagated from the
+		child's children to the function.
+
+     called	This is the number of times the function called
+		this child `/' the total number of times the child
+		was called.  Recursive calls by the child are not
+		listed in the number after the `/'.
+
+     name	This is the name of the child.  The child's index
+		number is printed after it.  If the child is a
+		member of a cycle, the cycle number is printed
+		between the name and the index number.
+
+ If there are any cycles (circles) in the call graph, there is an
+ entry for the cycle-as-a-whole.  This entry shows who called the
+ cycle (as parents) and the members of the cycle (as children.)
+ The `+' recursive calls entry shows the number of function calls that
+ were internal to the cycle, and the calls entry for each member shows,
+ for that member, how many times it was called from other members of
+ the cycle.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.
+
+Index by function name
+
+   [5] add_to_cluster_sum     [10] getLines               [11] readCsv
+   [8] assignCluster           [6] init_model              [4] update_centroids
+   [3] eucledianDist          [12] isColumnValid          [14] writeToCSV
+   [2] fit                    [13] printCentroids
+   [9] getClusterCentroid      [7] randomCentroids
