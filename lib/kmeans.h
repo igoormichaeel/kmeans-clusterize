@@ -7,6 +7,7 @@
 #include "malloc.h"
 
 struct KMeans {
+    int no_iteration;
     int no_clusters;
     float *centroids;
     int rows;

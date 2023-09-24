@@ -151,7 +151,7 @@ void fit(struct KMeans *model) {
      */
     printCentroids(model);
     float **cluster_centroids = malloc(sizeof(float *) * model->no_clusters);
-    int iteration = 10000;
+    int iteration = model->no_iteration;
     while (iteration >= 0) {
         for (int k = 0; k < model->no_clusters; k++) {
             cluster_centroids[k] = getClusterCentroid(model, k);
