@@ -15,8 +15,8 @@ int main() {
         .no_clusters = clusters,
         .centroids = malloc(sizeof(float) * csvData.columns * clusters),
         .columns = csvData.columns,
-        .data = csvData.data,
         .rows = csvData.rows,
+        .data = csvData.data,
         .data_clusters = malloc(sizeof(int) * csvData.rows)};
     // Initialize the model with random centroids.
     init_model(&model);
@@ -26,8 +26,8 @@ int main() {
     // Run the KMeans clustering algorithm on data points.
     fit(&model);
     // Display the results.
-    printCentroids(&model);
-    printClusterCount(&model);
+    // printCentroids(&model);
+    // printClusterCount(&model);
     time_t end = time(NULL);
     double time_taken = difftime(end, t);
     printf("\n\nThe program took %f seconds to execute.\n\n", time_taken);
