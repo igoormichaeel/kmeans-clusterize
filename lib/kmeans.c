@@ -6,6 +6,7 @@
 
 #include <malloc.h>
 #include <math.h>
+#include <omp.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -33,6 +34,7 @@ void randomCentroids(struct KMeans *model) {
 
 float eucledianDist(float *pt1, struct KMeans *model, int pt2_index) {
     float dist = 0;
+#pragma omp simd reduction(+ : dist)
     for (int i = 0; i < model->columns; i++) {
         int data_index = model->columns * pt2_index + i;
         dist += (pt1[i] - model->data[data_index]) *
