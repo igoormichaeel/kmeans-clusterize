@@ -19,7 +19,6 @@ void random_centroids(struct KMeans *model) {
     int columns = model->columns;
     int clusters = model->no_clusters;
 
-#pragma omp parallel for
     for (int cluster = 0; cluster < clusters; cluster++) {
         float random_number = ((float)rand() / (float)RAND_MAX);
         int random_row = (int)(random_number * rows);
@@ -34,7 +33,6 @@ void random_centroids(struct KMeans *model) {
 // Função para calcular a distância euclidiana entre dois pontos
 float euclidean_dist(float *pt1, struct KMeans *model, int pt2_index) {
     float dist = 0;
-#pragma omp parallel for reduction(+ : dist)
     for (int i = 0; i < model->columns; i++) {
         int data_index = model->columns * pt2_index + i;
         dist += (pt1[i] - model->data[data_index]) *
@@ -46,7 +44,6 @@ float euclidean_dist(float *pt1, struct KMeans *model, int pt2_index) {
 // Função para obter o centróide de um cluster
 float *get_cluster_centroid(struct KMeans *model, int cluster) {
     float *centroids = malloc(sizeof(float) * model->columns);
-#pragma omp parallel for
     for (int i = 0; i < model->columns; i++) {
         centroids[i] = model->centroids[cluster * model->columns + i];
     }
@@ -79,8 +76,6 @@ void assign_cluster(const float *cluster_dist, struct KMeans *model,
 // Adicionar valores de um ponto ao somatório de um cluster
 void add_to_cluster_sum(int row, float *cluster_sum, int cluster,
                         struct KMeans *model) {
-#pragma omp parallel for reduction( \
-        + : cluster_sum[cluster * model->columns : model->columns])
     for (int i = 0; i < model->columns; i++) {
         cluster_sum[cluster * model->columns + i] +=
             model->data[row * model->columns + i];
@@ -92,30 +87,26 @@ void update_centroids(struct KMeans *model) {
     int cluster_count[model->no_clusters];
     float sum_cluster_columns[model->no_clusters * model->columns];
 
-// Inicializa a contagem de clusters para 0
-#pragma omp parallel for
+    // Inicializa a contagem de clusters para 0
     for (int i = 0; i < model->no_clusters; i++) {
         cluster_count[i] = 0;
-#pragma omp parallel for
         for (int c = 0; c < model->columns; c++) {
             sum_cluster_columns[i * model->columns + c] = 0;
         }
     }
 
-// Itera por todos os pontos de dados e calcula o somatório dos pontos de
-// colunas e obtém a contagem para o cluster dado. Isso será usado mais tarde
-// para calcular a média e atualizar o centróide.
-#pragma omp parallel for
+    // Itera por todos os pontos de dados e calcula o somatório dos pontos de
+    // colunas e obtém a contagem para o cluster dado. Isso será usado mais
+    // tarde para calcular a média e atualizar o centróide.
     for (int row = 0; row < model->rows; row++) {
         // Variável booleana para verificar se o ponto foi atribuído a algum
         // cluster
         int assigned_to_cluster = 0;
 
-#pragma omp parallel for
         for (int k = 0; k < model->no_clusters; k++) {
             if (model->data_clusters[row] == k) {
-// Atualiza a contagem e o somatório do cluster para o ponto atual
-#pragma omp atomic
+                // Atualiza a contagem e o somatório do cluster para o ponto
+                // atual
                 cluster_count[k]++;
                 add_to_cluster_sum(row, sum_cluster_columns, k, model);
                 // Ativa a flag indicando que o ponto foi atribuído a algum
@@ -132,10 +123,8 @@ void update_centroids(struct KMeans *model) {
         }
     }
 
-// Atualiza os centróides com a média
-#pragma omp parallel for
+    // Atualiza os centróides com a média
     for (int k = 0; k < model->no_clusters; k++) {
-#pragma omp parallel for
         for (int c = 0; c < model->columns; c++) {
             if (cluster_count[k] != 0) {
                 model->centroids[k * model->columns + c] =
@@ -187,13 +176,11 @@ void fit(struct KMeans *model) {
     // Itera pelo algoritmo KMeans
     while (iteration >= 0) {
         // Obtém os centróides dos clusters
-#pragma omp parallel for
         for (int k = 0; k < model->no_clusters; k++) {
             clusterCentroids[k] = get_cluster_centroid(model, k);
         }
 
         // Atribui pontos aos clusters com base na distância euclidiana
-#pragma omp parallel for
         for (int i = 0; i < model->rows; i++) {
             float min_dist = euclidean_dist(clusterCentroids[0], model, i);
             model->data_clusters[i] = 0;
