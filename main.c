@@ -13,15 +13,15 @@ int main(int argc, char* argv[]) {
     double processing_time;
     clock_t start, finish;
     // Read dataset and assign the elements to struct.
-    struct CSVFile csvData = readCsv("data/genres_v2.csv");
+    struct CSVFile csv_data = readCsv("data/genres_v2.csv");
     struct KMeans model = {
         .no_iteration = no_iteration,
         .no_clusters = clusters,
-        .centroids = malloc(sizeof(float) * csvData.columns * clusters),
-        .columns = csvData.columns,
-        .rows = csvData.rows,
-        .data = csvData.data,
-        .data_clusters = malloc(sizeof(int) * csvData.rows)};
+        .centroids = malloc(sizeof(float) * csv_data.columns * clusters),
+        .columns = csv_data.columns,
+        .rows = csv_data.rows,
+        .data = csv_data.data,
+        .data_clusters = malloc(sizeof(int) * csv_data.rows)};
 
     // Initialize the model with random centroids.
     init_model(&model);
@@ -42,6 +42,6 @@ int main(int argc, char* argv[]) {
     printf("\nThe program took %f seconds to processing.\n", processing_time);
 
     char* resFile = "cluster_results_serial.csv";
-    writeToCSV(&model, resFile);
+    write_to_csv(&model, resFile);
     return 0;
 }

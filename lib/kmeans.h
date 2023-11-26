@@ -1,10 +1,5 @@
-//
-// Created by pi on 12/3/21.
-//
-
 #ifndef HPCFINAL_KMEANS_H
 #define HPCFINAL_KMEANS_H
-#include "malloc.h"
 
 struct KMeans {
     int no_iteration;
@@ -16,13 +11,17 @@ struct KMeans {
     int *data_clusters;
 };
 
-void randomCentroids(struct KMeans *model);
-float eucledianDist(float *pt1, struct KMeans *model, int pt2_index);
-float *getClusterCentroid(struct KMeans *model, int cluster);
-void printCentroids(struct KMeans *model);
-void printClusterCount(struct KMeans *model);
+void random_centroids(struct KMeans *model);
+float euclidean_dist(float *pt1, struct KMeans *model, int pt2_index);
+float *get_cluster_centroid(struct KMeans *model, int cluster);
 void init_model(struct KMeans *cluster);
-void fit(struct KMeans *model);
-void writeToCSV(struct KMeans *model, char *filename);
+void assign_cluster(const float *cluster_dist, struct KMeans *model, int index);
+void add_to_cluster_sum(int row, float *cluster_sum, int cluster,
+                        struct KMeans *model);
 void update_centroids(struct KMeans *model);
+void print_centroids(struct KMeans *model);
+void print_cluster_count(struct KMeans *model);
+void fit(struct KMeans *model);
+void write_to_csv(struct KMeans *model, char *filename);
+
 #endif  // HPCFINAL_KMEANS_H
