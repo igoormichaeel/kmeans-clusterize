@@ -1,0 +1,9 @@
+TENTATIVA 1
+
+[32m[Pascal][0m Running with ['cores', 'input', 'repetitions']
+[32m[Pascal][0m Cores: 2 Input: 0 
+[32m[Pascal][0m Total time 1654.0217082500458
+[32m[Pascal][0m Cores: 1 Input: 0 
+[32m[Pascal][0m Total time 113.00956892967224
+[32m[Pascal][0m ***** Done! *****
+[32m[Pascal][0m Saving data

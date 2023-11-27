@@ -1,6 +1,6 @@
-TIPO: Sequêncial
+TIPO: Paralelo
 NÚMERO DE ITERAÇÕES: 2500
 NÚMERO DE THREADS: 1
 
 This is line number: 42306
-The program took 36.024937 seconds to processing.
+The program took 156.506824 seconds to processing.

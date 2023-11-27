@@ -33,6 +33,7 @@ void random_centroids(struct KMeans *model) {
 // Função para calcular a distância euclidiana entre dois pontos
 float euclidean_dist(float *pt1, struct KMeans *model, int pt2_index) {
     float dist = 0;
+#pragma omp parallel for reduction(+ : dist)
     for (int i = 0; i < model->columns; i++) {
         int data_index = model->columns * pt2_index + i;
         dist += (pt1[i] - model->data[data_index]) *
@@ -76,6 +77,7 @@ void assign_cluster(const float *cluster_dist, struct KMeans *model,
 // Adicionar valores de um ponto ao somatório de um cluster
 void add_to_cluster_sum(int row, float *cluster_sum, int cluster,
                         struct KMeans *model) {
+#pragma omp parallel for
     for (int i = 0; i < model->columns; i++) {
         cluster_sum[cluster * model->columns + i] +=
             model->data[row * model->columns + i];
@@ -87,7 +89,8 @@ void update_centroids(struct KMeans *model) {
     int cluster_count[model->no_clusters];
     float sum_cluster_columns[model->no_clusters * model->columns];
 
-    // Inicializa a contagem de clusters para 0
+// Inicializa a contagem de clusters e o somatório do cluster
+#pragma omp parallel for
     for (int i = 0; i < model->no_clusters; i++) {
         cluster_count[i] = 0;
         for (int c = 0; c < model->columns; c++) {
@@ -95,9 +98,10 @@ void update_centroids(struct KMeans *model) {
         }
     }
 
-    // Itera por todos os pontos de dados e calcula o somatório dos pontos de
-    // colunas e obtém a contagem para o cluster dado. Isso será usado mais
-    // tarde para calcular a média e atualizar o centróide.
+// Itera por todos os pontos de dados e calcula o somatório dos pontos de
+// colunas e obtém a contagem para o cluster dado. Isso será usado mais
+// tarde para calcular a média e atualizar o centróide.
+#pragma omp parallel for
     for (int row = 0; row < model->rows; row++) {
         // Variável booleana para verificar se o ponto foi atribuído a algum
         // cluster
@@ -108,7 +112,10 @@ void update_centroids(struct KMeans *model) {
                 // Atualiza a contagem e o somatório do cluster para o ponto
                 // atual
                 cluster_count[k]++;
-                add_to_cluster_sum(row, sum_cluster_columns, k, model);
+                for (int c = 0; c < model->columns; c++) {
+                    sum_cluster_columns[k * model->columns + c] +=
+                        model->data[row * model->columns + c];
+                }
                 // Ativa a flag indicando que o ponto foi atribuído a algum
                 // cluster
                 assigned_to_cluster = 1;
@@ -123,7 +130,8 @@ void update_centroids(struct KMeans *model) {
         }
     }
 
-    // Atualiza os centróides com a média
+// Atualiza os centróides com a média
+#pragma omp parallel for
     for (int k = 0; k < model->no_clusters; k++) {
         for (int c = 0; c < model->columns; c++) {
             if (cluster_count[k] != 0) {
@@ -134,6 +142,7 @@ void update_centroids(struct KMeans *model) {
         }
     }
 }
+
 // Imprimir os centróides
 void print_centroids(struct KMeans *model) {
     // printf("\n printing centroids: \n");
