@@ -5,4 +5,4 @@
 #SBATCH --hint=compute_bound
 #SBATCH --exclusive
 
-pascalanalyzer ./main -c 1,2 -i 2500 -o pascalanalyzer_output.json
+pascalanalyzer ./main -c 2,4 -i 2500 -o pascalanalyzer_output2.json
